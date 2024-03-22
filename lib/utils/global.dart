@@ -59,3 +59,5 @@ List<Map> laptopList = [
     "image" :"assets/Image/MacBook.png",
   }
 ];
+
+List<Map> cartList = [];

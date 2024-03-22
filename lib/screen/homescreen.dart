@@ -1,7 +1,8 @@
+import 'package:discover_app/screen/cart.dart';
 import 'package:discover_app/utils/global.dart';
 import 'package:flutter/material.dart';
 
-import 'cart.dart';
+import 'product.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -22,13 +23,18 @@ class _HomescreenState extends State<Homescreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         actions: [
-          Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.black12)),
-            child: const Icon(Icons.shopping_bag_outlined, color: Colors.black),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, 'cart',arguments: CartScreen());
+            },
+            child: Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.black12)),
+              child: const Icon(Icons.shopping_bag_outlined, color: Colors.black),
+            ),
           )
         ],
       ),
