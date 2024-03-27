@@ -12,6 +12,10 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  double slider = 0.5;
+  int selected = 10000;
+  RangeValues rangeValues = RangeValues(10000, 100000);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +29,7 @@ class _HomescreenState extends State<Homescreen> {
         actions: [
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, 'cart',arguments: CartScreen());
+              Navigator.pushNamed(context, 'cart', arguments: CartScreen());
             },
             child: Container(
               height: 50,
@@ -33,7 +37,8 @@ class _HomescreenState extends State<Homescreen> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.black12)),
-              child: const Icon(Icons.shopping_bag_outlined, color: Colors.black),
+              child:
+                  const Icon(Icons.shopping_bag_outlined, color: Colors.black),
             ),
           )
         ],
@@ -42,6 +47,7 @@ class _HomescreenState extends State<Homescreen> {
         padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
@@ -80,7 +86,7 @@ class _HomescreenState extends State<Homescreen> {
               const SizedBox(
                 height: 15,
               ),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
@@ -96,7 +102,9 @@ class _HomescreenState extends State<Homescreen> {
                   )
                 ],
               ),
-              const SizedBox(height: 3,),
+              const SizedBox(
+                height: 3,
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -108,7 +116,10 @@ class _HomescreenState extends State<Homescreen> {
                       decoration: BoxDecoration(
                           color: Colors.greenAccent.shade400,
                           borderRadius: BorderRadius.circular(15)),
-                      child: const Text("All",style: TextStyle(color: Colors.white,fontWeight: FontWeight.normal)),
+                      child: const Text("All",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal)),
                     ),
                     Row(
                         children: List.generate(
@@ -134,6 +145,49 @@ class _HomescreenState extends State<Homescreen> {
               const SizedBox(
                 height: 10,
               ),
+              DropdownButton(
+                value: selected,
+                isExpanded: true,
+                items: [
+                  DropdownMenuItem(
+                    child: Text(
+                      "Helo",
+                    ),
+                    value: 10000,
+                  ),
+                  DropdownMenuItem(
+                    child: Text("Hii"),
+                    value: 20000,
+                  )
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    selected = value!;
+                  });
+                },
+              ),
+              Text("${rangeValues.start.toInt()}-${rangeValues.end.toInt()}"),
+              RangeSlider(
+                values: rangeValues,
+                max: 100000,
+                divisions: 20,
+                onChanged: (value) {
+                  setState(() {
+                    rangeValues = value;
+                  });
+                },
+              ),
+              //  Slider(
+              //    value: slider,
+              //    max: 10000,
+              //    divisions: 20,
+              //
+              //    onChanged: (value) {
+              //      setState(() {
+              //        slider = value;
+              //      });
+              //    },
+              //  ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -146,9 +200,10 @@ class _HomescreenState extends State<Homescreen> {
                       children: List.generate(
                         mobileList.length,
                         (index) => InkWell(
-                          onTap:() {
+                          onTap: () {
                             Map m1 = mobileList[index];
-                            Navigator.pushNamed(context, 'product',arguments: m1);
+                            Navigator.pushNamed(context, 'product',
+                                arguments: m1);
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -179,7 +234,9 @@ class _HomescreenState extends State<Homescreen> {
                                     Text(
                                       "${mobileList[index]['name']}",
                                       style: const TextStyle(
-                                          color: Colors.grey, fontSize: 16,fontWeight: FontWeight.bold),
+                                          color: Colors.grey,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
                                       width: 35,
@@ -226,7 +283,8 @@ class _HomescreenState extends State<Homescreen> {
                         (index) => InkWell(
                           onTap: () {
                             Map m2 = laptopList[index];
-                            Navigator.pushNamed(context, 'product',arguments: m2);
+                            Navigator.pushNamed(context, 'product',
+                                arguments: m2);
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -257,7 +315,9 @@ class _HomescreenState extends State<Homescreen> {
                                     Text(
                                       "${laptopList[index]['name']}",
                                       style: const TextStyle(
-                                          color: Colors.grey, fontSize: 16,fontWeight: FontWeight.bold),
+                                          color: Colors.grey,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(
                                       width: 30,

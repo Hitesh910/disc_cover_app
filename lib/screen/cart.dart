@@ -13,7 +13,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Cart "), centerTitle: true),
-      body: SingleChildScrollView(
+    body: SingleChildScrollView(
         child: Column(
           children: List.generate(cartList.length, (index) => Padding(
             padding: const EdgeInsets.all(8.0),
