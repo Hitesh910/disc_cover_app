@@ -4,5 +4,7 @@
 </p>
 <p>
 
-  <img src = "(https://github.com/Hitesh910/disc_cover_app/assets/154861495/e7482663-b6ee-4b39-a9e5-9596ecf3da06)"height="1000"width="1000"/>
+  <img src = "https://github.com/Hitesh910/disc_cover_app/assets/154861495/66595e73-22d2-46c8-bd2c-944c93c75a98"height="1000"width="350"/>
+
+
 </p>
