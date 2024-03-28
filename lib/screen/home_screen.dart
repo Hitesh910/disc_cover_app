@@ -1,6 +1,8 @@
 import 'package:discover_app/screen/cart_screen.dart';
 import 'package:discover_app/utils/global.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'product_screen.dart';
 
@@ -15,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double slider = 0.5;
   int selected = 10000;
   RangeValues rangeValues = RangeValues(10000, 100000);
+  bool isLaptop = true, isMobile = true;
 
   @override
   Widget build(BuildContext context) {
@@ -109,34 +112,70 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 45,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.greenAccent.shade400,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: const Text("All",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal)),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          isLaptop = true;
+                          isMobile = true;
+                        });
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 45,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.greenAccent.shade400,
+                            borderRadius: BorderRadius.circular(15)),
+                        child: const Text("All",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal)),
+                      ),
                     ),
                     Row(
                         children: List.generate(
                       productList.length,
-                      (index) => Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        height: 42,
-                        width: 130,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 2),
-                            borderRadius: BorderRadius.circular(15)),
-                        alignment: Alignment.center,
-                        child: Text("${productList[index]['Name']}",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal)),
+                      (index) => InkWell(
+                        onTap: () {
+                          setState(() {
+                            if (productList[index]["Name"] == "Smartphones") {
+                              isMobile = true;
+                              isLaptop = false;
+                            }
+                            else if (productList[index]["Name"] == "Laptop")
+                              {
+                                isMobile =false;
+                                isLaptop = true;
+                              }
+                            else
+                              {
+                                isMobile = false;
+                                isLaptop = false;
+                              }
+                          });
+                          // else if(product)
+                          //   {
+                          //
+                          //   }
+                          // else
+                          //   {
+                          //
+                          //   }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          height: 42,
+                          width: 130,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 2),
+                              borderRadius: BorderRadius.circular(15)),
+                          alignment: Alignment.center,
+                          child: Text("${productList[index]['Name']}",
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal)),
+                        ),
                       ),
                     )),
                   ],
@@ -148,16 +187,24 @@ class _HomeScreenState extends State<HomeScreen> {
               DropdownButton(
                 value: selected,
                 isExpanded: true,
-                items: [
+                items: const [
                   DropdownMenuItem(
-                    child: Text(
-                      "Helo",
-                    ),
                     value: 10000,
+                    child: Text(
+                      "under 10K",
+                    ),
                   ),
                   DropdownMenuItem(
-                    child: Text("Hii"),
                     value: 20000,
+                    child: Text("under 20K"),
+                  ),
+                  DropdownMenuItem(
+                    value: 50000,
+                    child: Text("under 50K"),
+                  ),
+                  DropdownMenuItem(
+                    value: 100000,
+                    child: Text("under 1L"),
                   )
                 ],
                 onChanged: (value) {
@@ -191,79 +238,85 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Mobile phnes",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                        mobileList.length,
-                        (index) => InkWell(
-                          onTap: () {
-                            Map m1 = mobileList[index];
-                            Navigator.pushNamed(context, 'product',
-                                arguments: m1);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(right: 15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(top: 10),
-                                  height: 170,
-                                  width: 180,
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.black12,
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "${mobileList[index]['image']}"))),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 5),
-                                    ),
-                                    Text(
-                                      "${mobileList[index]['name']}",
-                                      style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      width: 35,
-                                    ),
-                                    const Icon(Icons.star_rate,
-                                        color: Colors.amber),
-                                    Text(
-                                      "${mobileList[index]['rating']}",
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                Text(
-                                  "₹${mobileList[index]['price']}",
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )
-                              ],
+                  Visibility(
+                    visible: isMobile,
+                    child: Text("Mobile phnes",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  Visibility(
+                    visible: isMobile,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          mobileList.length,
+                          (index) => mobileList[index]['price']>=rangeValues.start && mobileList[index]['price']>=rangeValues.end ?InkWell(
+                            onTap: () {
+                              Map m1 = mobileList[index];
+                              Navigator.pushNamed(context, 'product',
+                                  arguments: m1);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(right: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10),
+                                    height: 170,
+                                    width: 180,
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "${mobileList[index]['image']}"))),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 5),
+                                      ),
+                                      Text(
+                                        "${mobileList[index]['name']}",
+                                        style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        width: 35,
+                                      ),
+                                      const Icon(Icons.star_rate,
+                                          color: Colors.amber),
+                                      Text(
+                                        "${mobileList[index]['rating']}",
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    "₹${mobileList[index]['price']}",
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
+                          ):Container(),
                         ),
                       ),
                     ),
@@ -271,78 +324,85 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "Laptop",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Visibility(
+                    visible: isLaptop,
+                    child: Text(
+                      "Laptop",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                        laptopList.length,
-                        (index) => InkWell(
-                          onTap: () {
-                            Map m2 = laptopList[index];
-                            Navigator.pushNamed(context, 'product',
-                                arguments: m2);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(right: 15),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(top: 10),
-                                  height: 170,
-                                  width: 180,
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      color: Colors.black12,
-                                      borderRadius: BorderRadius.circular(20),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "${laptopList[index]['image']}"))),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 5),
-                                    ),
-                                    Text(
-                                      "${laptopList[index]['name']}",
-                                      style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      width: 30,
-                                    ),
-                                    const Icon(Icons.star_rate,
-                                        color: Colors.amber),
-                                    Text(
-                                      "${laptopList[index]['rating']}",
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                Text(
-                                  "₹${laptopList[index]['price']}",
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                )
-                              ],
+                  Visibility(
+                    visible: isLaptop,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          laptopList.length,
+                          (index) => InkWell(
+                            onTap: () {
+                              Map m2 = laptopList[index];
+                              Navigator.pushNamed(context, 'product',
+                                  arguments: m2);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(right: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10),
+                                    height: 170,
+                                    width: 180,
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "${laptopList[index]['image']}"))),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(left: 5),
+                                      ),
+                                      Text(
+                                        "${laptopList[index]['name']}",
+                                        style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        width: 30,
+                                      ),
+                                      const Icon(Icons.star_rate,
+                                          color: Colors.amber),
+                                      Text(
+                                        "${laptopList[index]['rating']}",
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    "₹${laptopList[index]['price']}",
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
