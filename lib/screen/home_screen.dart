@@ -1,17 +1,17 @@
-import 'package:discover_app/screen/cart.dart';
+import 'package:discover_app/screen/cart_screen.dart';
 import 'package:discover_app/utils/global.dart';
 import 'package:flutter/material.dart';
 
-import 'product.dart';
+import 'product_screen.dart';
 
-class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Homescreen> createState() => _HomescreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class _HomeScreenState extends State<HomeScreen> {
   double slider = 0.5;
   int selected = 10000;
   RangeValues rangeValues = RangeValues(10000, 100000);

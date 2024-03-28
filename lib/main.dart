@@ -1,6 +1,6 @@
-import 'package:discover_app/screen/cart.dart';
-import 'package:discover_app/screen/product.dart';
-import 'package:discover_app/screen/homescreen.dart';
+import 'package:discover_app/screen/cart_screen.dart';
+import 'package:discover_app/screen/product_screen.dart';
+import 'package:discover_app/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,7 +8,7 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       routes:{
-        '/':(context) => Homescreen(),
+        '/':(context) => HomeScreen(),
         'product':(context) => ProductScreen(),
         'cart':(context) => CartScreen(),
     }
